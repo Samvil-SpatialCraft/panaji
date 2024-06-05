@@ -36,7 +36,7 @@ map.addControl(layerSwitcher);
 
 
 //initial view - epsg:3857 coordinates if not "Match project CRS"
-map.getView().fit([8216947.955681, 1745518.537065, 8217453.127432, 1745820.308508], map.getSize());
+map.getView().fit([8216171.056195, 1744665.450598, 8220212.430204, 1747079.642682], map.getSize());
 
 var NO_POPUP = 0
 var ALL_FIELDS = 1
