@@ -1,4 +1,8 @@
 var wms_layers = [];
+// Create a link element
+var link = document.createElement("link");
+
+
 
 
         var lyr_GoogleSatellite_0 = new ol.layer.Tile({
@@ -30,14 +34,23 @@ var features_Trees_2 = format_Trees_2.readFeatures(json_Trees_2,
 var jsonSource_Trees_2 = new ol.source.Vector({
     attributions: ' ',
 });
+
+jsonSource_Trees_2.on('addfeature', function() {
+    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
+    
+    document.getElementById('notrees').innerText =totalFeatures;
+});
+
 jsonSource_Trees_2.addFeatures(features_Trees_2);
+
 var lyr_Trees_2 = new ol.layer.Vector({
                 declutter: false,
                 source:jsonSource_Trees_2, 
                 style: style_Trees_2,
                 popuplayertitle: "Trees",
                 interactive: true,
-                title: '<img style="max-width:16px; max-height:16px;" src="styles/tree.svg" /> Trees'
+                title: '<img style="max-width:16px; max-height:16px;" src="styles/tree.svg" class="icon" /> Trees'
+
             });
 
 lyr_GoogleSatellite_0.setVisible(true);lyr_OSMStandard_1.setVisible(true);lyr_Trees_2.setVisible(true);
@@ -47,4 +60,61 @@ lyr_Trees_2.set('fieldImages', {'OBJECTID': 'TextEdit', 'English_Name_Konkani_Na
 lyr_Trees_2.set('fieldLabels', {'OBJECTID': 'hidden field', 'English_Name_Konkani_Name_Scientific_Name_': 'hidden field', 'English_Name': 'inline label - visible with data', 'Konkani_Name': 'inline label - visible with data', 'Botanical_Name': 'inline label - visible with data', 'Location': 'hidden field', 'Serial_Number_of_the_tree': 'hidden field', 'Photo_of_the_tree': 'hidden field', 'Date_of_the_photo': 'hidden field', 'Record_your_current_location': 'hidden field', 'Latitude': 'hidden field', 'Longitude': 'hidden field', '_Record_your_current_location_altitude': 'hidden field', '_Record_your_current_location_precision': 'hidden field', 'Date_of_Plantation': 'hidden field', 'Tree_height_of_the_tree_at_time_of_plantation_in_meters_': 'hidden field', 'Presence_of_tree_guard': 'hidden field', 'Name_of_the_tree_guardian': 'hidden field', 'Phone_number_of_the_tree_guardian': 'hidden field', 'Remarks_Observations': 'hidden field', '_uuid': 'hidden field', 'Tree_height_m__at_time_of_plantation': 'inline label - visible with data', 'Planted_on': 'inline label - visible with data', 'Tree_Guard': 'inline label - visible with data', 'Photo': 'inline label - visible with data', });
 lyr_Trees_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
+});
+
+ // Extract and prepare data
+ var fieldCounts = {};
+ features_Trees_2.forEach(function(feature) {
+     var fieldValue = feature.get('English_Name_Konkani_Name_Scientific_Name_');
+     if (fieldValue) {
+         if (fieldCounts[fieldValue]) {
+             fieldCounts[fieldValue]++;
+         } else {
+             fieldCounts[fieldValue] = 1;
+         }
+     }
+ });
+
+ // Prepare the data for Chart.js
+ var labels = Object.keys(fieldCounts);
+var data = Object.values(fieldCounts);
+
+// Create the pie chart
+var ctx = document.getElementById('myPieChart').getContext('2d');
+var myPieChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: labels,
+        datasets: [{
+            data: data,
+            backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40',
+                '#66FF66'
+            ],
+            hoverBackgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40',
+                '#66FF66'
+            ]
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false,
+                labels: {
+                    color: 'rgb(255, 99, 132)'
+                }
+            }
+        }
+    }
 });
