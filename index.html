@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         <link rel="stylesheet" href="style.css">
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 <style>
 .search-layer {
   top: 65px;
@@ -70,7 +70,9 @@
                 <img id="treeimg" src="Physical_Survey_Fence_Boundary__1_-removebg-preview.png" alt="">
                 <p id="notrees">Number of Trees</p>
             </div>
-            <canvas id="myPieChart"></canvas>
+            <canvas id="myPieChart" width="200" height="200" style="display: block; box-sizing: border-box;"></canvas>
+
+
         </div>
         
         <script>

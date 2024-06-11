@@ -1,26 +1,30 @@
 .dashboard {
     position: absolute;
-    width: 250px;
+    width: 300px;
+    height: auto;
     bottom: 5px;
     left: 5px;
     background-color: rgba(255, 255, 255, 0.445);
     border: solid 1px black;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Align items at the top */
+    justify-content: flex-start;
     align-items: center;
 }
 
 .top-container {
     display: flex;
-    flex-direction: row; /* Arrange items side by side */
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 5px; /* Add some space between the top container and the pie chart */
+    margin-top: -15px;
 }
 
 #myPieChart {
-    width: 170px !important;
-    height: 150px !important;
+    font-size: larger;
+    width: 200px !important;
+    height: 200px !important;
+    margin-top: -10px;
 }
 
 #treeimg {
@@ -30,7 +34,7 @@
 
 #notrees {
     font-size: 35px;
-    margin-left: 10px; /* Add some space between the image and the paragraph */
+    margin-left: 1px;
 }
 
 @media (max-width: 600px) {
@@ -42,7 +46,8 @@
         height: 60px;
     }
     #myPieChart {
-        width: 120px !important;
-        height: 90px !important;
+        width: 150px !important;
+        height: 150px !important;
     }
+ 
 }

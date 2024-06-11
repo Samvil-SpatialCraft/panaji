@@ -79,8 +79,40 @@ lyr_Trees_2.on('precompose', function(evt) {
  var labels = Object.keys(fieldCounts);
 var data = Object.values(fieldCounts);
 
-// Create the pie chart
 var ctx = document.getElementById('myPieChart').getContext('2d');
+var isMobileView = window.matchMedia("(max-width: 600px)").matches;
+
+var options = {
+    plugins: {
+        legend: {
+            display: false
+        },
+        tooltip: {
+            enabled: true,
+            position: 'nearest',
+            callbacks: {
+                label: function(context) {
+                    var label = context.label || '';
+                    return label;
+                }
+            },
+            bodyFont: {
+                size: isMobileView ? 7 : 10 // Set font size based on view
+            }
+        }
+    }
+};
+
+if (isMobileView) {
+    // Mobile view
+    options.responsive = true;
+    options.maintainAspectRatio = true;
+} else {
+    // Desktop view
+    options.responsive = false;
+    options.maintainAspectRatio = false;
+}
+
 var myPieChart = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -107,14 +139,5 @@ var myPieChart = new Chart(ctx, {
             ]
         }]
     },
-    options: {
-        plugins: {
-            legend: {
-                display: false,
-                labels: {
-                    color: 'rgb(255, 99, 132)'
-                }
-            }
-        }
-    }
+    options: options
 });
