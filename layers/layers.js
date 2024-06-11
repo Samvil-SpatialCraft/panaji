@@ -30,6 +30,15 @@ var features_Trees_2 = format_Trees_2.readFeatures(json_Trees_2,
 var jsonSource_Trees_2 = new ol.source.Vector({
     attributions: ' ',
 });
+
+jsonSource_Trees_2.on('addfeature', function() {
+    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
+    
+    document.getElementById('notrees').innerText =totalFeatures;
+});    
+
+
+
 jsonSource_Trees_2.addFeatures(features_Trees_2);
 var lyr_Trees_2 = new ol.layer.Vector({
                 declutter: false,
@@ -39,6 +48,7 @@ var lyr_Trees_2 = new ol.layer.Vector({
                 interactive: true,
                 title: '<img style="max-width:16px; max-height:16px;" src="styles/tree.svg" /> Trees'
             });
+                
 
 lyr_GoogleSatellite_0.setVisible(true);lyr_OSMStandard_1.setVisible(true);lyr_Trees_2.setVisible(true);
 var layersList = [lyr_GoogleSatellite_0,lyr_OSMStandard_1,lyr_Trees_2];
@@ -103,6 +113,7 @@ if (isMobileView) {
    options.maintainAspectRatio = false;
 }
 
+
 // Function to generate a random color in hexadecimal format
 function getRandomColor() {
    var letters = '0123456789ABCDEF';
@@ -134,9 +145,4 @@ var myPieChart = new Chart(ctx, {
        }]
    },
    options: options
-});
-jsonSource_Trees_2.on('addfeature', function() {
-    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
-    
-    document.getElementById('notrees').innerText =totalFeatures;
 });
