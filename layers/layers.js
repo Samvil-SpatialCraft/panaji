@@ -89,11 +89,15 @@ var options = {
         },
         tooltip: {
             enabled: true,
-            position: 'nearest',
+            position: 'nearest', // To allow tooltips to go outside the canvas boundary
             callbacks: {
                 label: function(context) {
                     var label = context.label || '';
-                    return label;
+                    if (label) {
+                        var value = context.parsed || 0;
+                        return value + ':' + label;
+                    }
+                    return '';
                 }
             },
             bodyFont: {
