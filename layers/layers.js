@@ -117,30 +117,34 @@ if (isMobileView) {
     options.maintainAspectRatio = false;
 }
 
+// Function to generate a random color in hexadecimal format
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
+// Generate 56 unique colors for background and hover background
+var backgroundColors = [];
+var hoverBackgroundColors = [];
+
+for (var i = 0; i < 56; i++) {
+    var color = getRandomColor();
+    backgroundColors.push(color);
+    hoverBackgroundColors.push(color); // For simplicity, you can use the same color for hover
+}
+
 var myPieChart = new Chart(ctx, {
     type: 'pie',
     data: {
         labels: labels,
         datasets: [{
             data: data,
-            backgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF',
-                '#FF9F40',
-                '#66FF66'
-            ],
-            hoverBackgroundColor: [
-                '#FF6384',
-                '#36A2EB',
-                '#FFCE56',
-                '#4BC0C0',
-                '#9966FF',
-                '#FF9F40',
-                '#66FF66'
-            ]
+            backgroundColor: backgroundColors,
+            hoverBackgroundColor: hoverBackgroundColors
         }]
     },
     options: options
