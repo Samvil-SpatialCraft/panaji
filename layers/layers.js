@@ -135,3 +135,8 @@ var myPieChart = new Chart(ctx, {
    },
    options: options
 });
+jsonSource_Trees_2.on('addfeature', function() {
+    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
+    
+    document.getElementById('notrees').innerText =totalFeatures;
+});
