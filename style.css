@@ -10,21 +10,16 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    padding: 10px;
 }
 
 .top-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: -15px;
-}
-
-#myPieChart {
-    font-size: larger;
-    width: 200px !important;
-    height: 200px !important;
-    margin-top: -10px;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 #treeimg {
@@ -32,23 +27,48 @@
     height: 80px;
 }
 
+.text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;     /* Center text within container */
+    margin-left: 10px;
+}
+
 #notrees {
     font-size: 35px;
-    margin-left: 1px;
+    margin: 0;
+}
+
+#myPieChart {
+    font-size: larger;
+    width: 200px !important;
+    height: 200px !important;
 }
 
 @media (max-width: 600px) {
     .dashboard {
-        width: 150px;
+        width: 190px;
+        padding: 5px;
+        margin-top: -10px;
     }
     #treeimg {
         width: 60px;
         height: 60px;
     }
+    .text-container {
+        margin-left: 5px;
+    }
     #myPieChart {
         width: 150px !important;
         height: 150px !important;
-        margin-top: -20px;
+        margin-top: -10px;
     }
- 
+    #notrees {
+        font-size: 25px;
+        margin: 0;
+    }
+    #total_text{
+        font-size: 10px;
+    }
 }
