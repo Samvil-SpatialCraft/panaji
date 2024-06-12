@@ -34,7 +34,8 @@ jsonSource_Trees_2.on('addfeature', function() {
     var totalFeatures = jsonSource_Trees_2.getFeatures().length;
     
     document.getElementById('notrees').innerText =totalFeatures;
-}); 
+});    
+
 jsonSource_Trees_2.addFeatures(features_Trees_2);
 var lyr_Trees_2 = new ol.layer.Vector({
                 declutter: false,
@@ -53,6 +54,7 @@ lyr_Trees_2.set('fieldLabels', {'OBJECTID': 'hidden field', 'English_Name_Konkan
 lyr_Trees_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
+
 // Extract and prepare data
 var fieldCounts = {};
 features_Trees_2.forEach(function(feature) {
