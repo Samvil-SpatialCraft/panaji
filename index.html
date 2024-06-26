@@ -12,7 +12,10 @@
         <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
         <link rel="stylesheet" href="./resources/qgis2web.css">
         <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="tooltip.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <style>
 .search-layer {
   top: 65px;
@@ -73,8 +76,12 @@
                     <p id="notrees"></p>
                 </div>
             </div>
-            <canvas id="myPieChart" width="200" height="200" style="display: block; box-sizing: border-box;"></canvas>
+            <canvas id="myPieChart" width="250" height="200" style="display: block; box-sizing: border-box;overflow: visible;"></canvas>
         </div>
+        <div id="customTooltip" class="custom-tooltip">
+            <div id="customTooltipContent" class="custom-tooltip-content"></div>
+        </div>
+        
         
         
         <script>

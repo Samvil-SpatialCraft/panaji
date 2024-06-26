@@ -57,8 +57,20 @@ lyr_Trees_2.on('precompose', function(evt) {
 
 // Extract and prepare data
 var fieldCounts = {};
+
 features_Trees_2.forEach(function(feature) {
-    var fieldValue = feature.get('English_Name_Konkani_Name_Scientific_Name_');
+    var englishName = feature.get('English_Name') || '';
+    var konkaniName = feature.get('Konkani_Name') || '';
+
+    // Combine English_Name and Konkani_Name
+    var fieldValue = englishName;
+    if (englishName && konkaniName) {
+        fieldValue += ' / ' + konkaniName;
+    } else if (konkaniName) {
+        fieldValue = konkaniName;
+    }
+
+    // Count occurrences of fieldValue
     if (fieldValue) {
         if (fieldCounts[fieldValue]) {
             fieldCounts[fieldValue]++;
@@ -67,6 +79,9 @@ features_Trees_2.forEach(function(feature) {
         }
     }
 });
+
+// Now fieldCounts contains the counts of each combined English_Name / Konkani_Name
+
 
 // Prepare the data for Chart.js
 var labels = Object.keys(fieldCounts);
@@ -94,7 +109,7 @@ var options = {
                }
            },
            bodyFont: {
-               size: isMobileView ? 7 : 10 // Set font size based on view
+               size: isMobileView ? 9 : 13// Set font size based on view
            }
        }
    }
