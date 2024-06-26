@@ -4,7 +4,8 @@ var wms_layers = [];
         var lyr_GoogleSatellite_0 = new ol.layer.Tile({
             'title': 'Google Satellite',
             //'type': 'base',
-            'opacity': 1.000000,
+            'opacity': 0.000000,
+            name:"Google Satellite",
             
             
             source: new ol.source.XYZ({
@@ -17,6 +18,7 @@ var wms_layers = [];
             'title': 'OSM Standard',
             //'type': 'base',
             'opacity': 1.000000,
+            name:"OSM ",
             
             
             source: new ol.source.XYZ({
@@ -80,9 +82,6 @@ features_Trees_2.forEach(function(feature) {
     }
 });
 
-// Now fieldCounts contains the counts of each combined English_Name / Konkani_Name
-
-
 // Prepare the data for Chart.js
 var labels = Object.keys(fieldCounts);
 var data = Object.values(fieldCounts);
@@ -109,7 +108,7 @@ var options = {
                }
            },
            bodyFont: {
-               size: isMobileView ? 9 : 13// Set font size based on view
+               size: isMobileView ? 8 : 12 // Set font size based on view
            }
        }
    }
