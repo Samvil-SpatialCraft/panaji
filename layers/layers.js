@@ -4,8 +4,7 @@ var wms_layers = [];
         var lyr_GoogleSatellite_0 = new ol.layer.Tile({
             'title': 'Google Satellite',
             //'type': 'base',
-            'opacity': 0.000000,
-            name:"Google Satellite",
+            'opacity': 1.000000,
             
             
             source: new ol.source.XYZ({
@@ -18,7 +17,6 @@ var wms_layers = [];
             'title': 'OSM Standard',
             //'type': 'base',
             'opacity': 1.000000,
-            name:"OSM ",
             
             
             source: new ol.source.XYZ({
@@ -32,12 +30,6 @@ var features_Trees_2 = format_Trees_2.readFeatures(json_Trees_2,
 var jsonSource_Trees_2 = new ol.source.Vector({
     attributions: ' ',
 });
-jsonSource_Trees_2.on('addfeature', function() {
-    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
-    
-    document.getElementById('notrees').innerText =totalFeatures;
-});    
-
 jsonSource_Trees_2.addFeatures(features_Trees_2);
 var lyr_Trees_2 = new ol.layer.Vector({
                 declutter: false,
@@ -45,8 +37,15 @@ var lyr_Trees_2 = new ol.layer.Vector({
                 style: style_Trees_2,
                 popuplayertitle: "Trees",
                 interactive: true,
-                title: '<img style="max-width:16px; max-height:16px;" src="styles/tree.svg" /> Trees'
+                title: '<img src="styles/legend/Trees_2.png" /> Trees'
             });
+
+            jsonSource_Trees_2.on('addfeature', function() {
+                var totalFeatures = jsonSource_Trees_2.getFeatures().length;
+                const totaltrees=totalFeatures;
+                
+                document.getElementById('notrees').innerText =totalFeatures;
+            });               
 
 lyr_GoogleSatellite_0.setVisible(true);lyr_OSMStandard_1.setVisible(true);lyr_Trees_2.setVisible(true);
 var layersList = [lyr_GoogleSatellite_0,lyr_OSMStandard_1,lyr_Trees_2];
@@ -56,7 +55,6 @@ lyr_Trees_2.set('fieldLabels', {'OBJECTID': 'hidden field', 'English_Name_Konkan
 lyr_Trees_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
-
 // Extract and prepare data
 var fieldCounts = {};
 
@@ -156,4 +154,88 @@ var myPieChart = new Chart(ctx, {
        }]
    },
    options: options
+});
+ // Extract unique English_Name_Konkani_Name_Scientific_Name_ values
+var uniqueNames = {};
+features_Trees_2.forEach(function(feature) {
+    var fieldValue = feature.get('English_Name_Konkani_Name_Scientific_Name_');
+    if (fieldValue && !uniqueNames[fieldValue]) {
+        uniqueNames[fieldValue] = true;
+    }
+});
+
+var namesArray = Object.keys(uniqueNames); // Get all unique names
+
+$(document).ready(function() {
+    var $dropdown = $('#treeDropdown');
+
+    // Append options to the dropdown
+    namesArray.forEach(function(name) {
+        $dropdown.append(new Option(name, name));
+    });
+
+    // Function to filter map features based on selected tree name
+    function filterMapByTreeName(treeName) {
+        // Clear existing features from the layer source
+        jsonSource_Trees_2.clear();
+
+        // Filter features based on selected tree name
+        var filteredFeatures = features_Trees_2.filter(function(feature) {
+            var fieldValue = feature.get('English_Name_Konkani_Name_Scientific_Name_');
+            return fieldValue === treeName;
+        });
+
+        // Add filtered features back to the layer source
+        jsonSource_Trees_2.addFeatures(filteredFeatures);
+         // Update the text content based on filter
+    if (treeName) {
+        document.getElementById('total_text').innerText = 'Trees planted';
+    } else {
+        document.getElementById('total_text').innerText = 'Total trees planted';
+    }
+
+        
+
+        // Zoom to extent of filtered features
+     
+    }
+
+    // Event listener for dropdown change
+    $dropdown.on('change', function(e) {
+        var selectedTree = $(this).val();
+
+        // Event listener for dropdown change
+    $dropdown.on('change', function(e) {
+        var selectedTree = $(this).val();
+
+        if (selectedTree === "") {
+            // Reset map to show all features
+            resetMap();
+        } else {
+            // Filter map features based on selected tree name
+            filterMapByTreeName(selectedTree);
+        }
+    });
+
+        // Call function to filter map features based on selected tree name
+        filterMapByTreeName(selectedTree);
+    });
+
+    // Function to reset map to show all features
+   // Function to reset map to show all features
+function resetMap() {
+    jsonSource_Trees_2.clear();
+    jsonSource_Trees_2.addFeatures(features_Trees_2);
+    var extent = [8216522.173750, 1744991.831563, 8220563.547759, 1747406.056648];
+    map.getView().fit(extent, { size: map.getSize() });
+}
+
+
+    // Reset map on initial load
+    resetMap();
+});
+const homebutton = document.getElementById('home_button');
+homebutton.addEventListener('click', function() {
+    var extent = [8216522.173750, 1744991.831563, 8220563.547759, 1747406.056648];
+    map.getView().fit(extent, { size: map.getSize() });
 });
