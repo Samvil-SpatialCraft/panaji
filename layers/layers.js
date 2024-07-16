@@ -4,7 +4,8 @@ var wms_layers = [];
         var lyr_GoogleSatellite_0 = new ol.layer.Tile({
             'title': 'Google Satellite',
             //'type': 'base',
-            'opacity': 1.000000,
+            'opacity': 0.000000,
+            name:"Google Satellite",
             
             
             source: new ol.source.XYZ({
@@ -17,6 +18,7 @@ var wms_layers = [];
             'title': 'OSM Standard',
             //'type': 'base',
             'opacity': 1.000000,
+            name:"OSM ",
             
             
             source: new ol.source.XYZ({
@@ -30,6 +32,13 @@ var features_Trees_2 = format_Trees_2.readFeatures(json_Trees_2,
 var jsonSource_Trees_2 = new ol.source.Vector({
     attributions: ' ',
 });
+jsonSource_Trees_2.on('addfeature', function() {
+    var totalFeatures = jsonSource_Trees_2.getFeatures().length;
+    const totaltrees=totalFeatures;
+    
+    document.getElementById('notrees').innerText =totalFeatures;
+});    
+
 jsonSource_Trees_2.addFeatures(features_Trees_2);
 var lyr_Trees_2 = new ol.layer.Vector({
                 declutter: false,
@@ -37,15 +46,8 @@ var lyr_Trees_2 = new ol.layer.Vector({
                 style: style_Trees_2,
                 popuplayertitle: "Trees",
                 interactive: true,
-                title: '<img src="styles/legend/Trees_2.png" /> Trees'
+                title: '<img style="max-width:16px; max-height:16px;" src="styles/tree.svg" /> Trees'
             });
-
-            jsonSource_Trees_2.on('addfeature', function() {
-                var totalFeatures = jsonSource_Trees_2.getFeatures().length;
-                const totaltrees=totalFeatures;
-                
-                document.getElementById('notrees').innerText =totalFeatures;
-            });               
 
 lyr_GoogleSatellite_0.setVisible(true);lyr_OSMStandard_1.setVisible(true);lyr_Trees_2.setVisible(true);
 var layersList = [lyr_GoogleSatellite_0,lyr_OSMStandard_1,lyr_Trees_2];
@@ -55,6 +57,7 @@ lyr_Trees_2.set('fieldLabels', {'OBJECTID': 'hidden field', 'English_Name_Konkan
 lyr_Trees_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
+
 // Extract and prepare data
 var fieldCounts = {};
 
@@ -233,9 +236,4 @@ function resetMap() {
 
     // Reset map on initial load
     resetMap();
-});
-const homebutton = document.getElementById('home_button');
-homebutton.addEventListener('click', function() {
-    var extent = [8216522.173750, 1744991.831563, 8220563.547759, 1747406.056648];
-    map.getView().fit(extent, { size: map.getSize() });
 });

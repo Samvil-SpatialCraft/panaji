@@ -65,20 +65,7 @@
     color: #888; /* Light gray color */
 }
 
- .geolocate{
-    background-color: rgba(255, 255, 255, .4) !important;
-    padding: 3px !important;
-    right: 5px !important;
-    bottom: 50px;
-    font-size:20px;
-}
-#home_button{
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 30px;
-    right: 5px;
-}
+
 @media (max-width: 600px) {
     .dashboard {
         width: 190px;
